@@ -1,5 +1,6 @@
 <?php
-
+use App\Models\Contact;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/contact', function () {
-    return view('contact');
+Route::get('/contact/{variable?}', function ($variable = null) {
+    // dd($variable);
+    return view('contact', compact('variable')); 
 });
+
+Route::post('/validate-contact', function (Request $request) {
+    //dd($request -> email);
+    $contact = new Contact();
+    $contact->email = $request->email;
+    $contact->comment = $request->comment;
+    $contact->save();
+    return redirect()->back();
+});
+
 
