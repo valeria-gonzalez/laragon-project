@@ -10,6 +10,17 @@
     <h3>
         {{ $variable }}
     </h3>
+
+    @if($errors->any())
+        <div class = "alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action = "validate-contact" method = "post">
         @csrf <!--cross site resource forgery-->
         <label for = "email">Email</label>

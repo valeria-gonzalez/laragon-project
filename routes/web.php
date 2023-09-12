@@ -1,6 +1,8 @@
 <?php
-use App\Models\Contact;
-use Illuminate\Http\Request;
+
+use App\Http\Controllers\HomeworkController;
+use App\Http\Controllers\SiteController;
+use App\Models\Homework;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,18 +20,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/contact/{variable?}', function ($variable = null) {
+Route::get('/contact/{variable?}', [SiteController::class, 'contactForm']
     // dd($variable);
-    return view('contact', compact('variable')); 
-});
+    // return view('contact', compact('variable')); 
+);
 
-Route::post('/validate-contact', function (Request $request) {
-    //dd($request -> email);
-    $contact = new Contact();
-    $contact->email = $request->email;
-    $contact->comment = $request->comment;
-    $contact->save();
-    return redirect()->back();
-});
+Route::post('/validate-contact', [SiteController::class, 'contactSave']
+        // $request->validate([
+        //     'email' => 'required|email',
+        //     'comment' => ['required', 'min:5', 'max:50'],
+        // ]);
 
+        // $contact = new Contact();
+        // $contact->email = $request->email;
+        // $contact->comment = $request->comment;
+        // $contact->save();
+        // return redirect()->back();
+);
+
+Route::resource('Homework', HomeworkController::class);
 
